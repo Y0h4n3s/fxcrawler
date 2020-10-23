@@ -1,27 +1,25 @@
 package ui;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.layout.*;
-import ui.TargetUrlInputRow;
-import ui.ThreadsAmountRow;
+import java.util.logging.Logger;
 
-public class MainFrame extends Application{
+
+import javafx.scene.layout.*;
+
+public class MainFrame extends GridPane{
 	
-	@Override
-	public void start(Stage stage) {
-		GridPane root = new GridPane();
-		root.setVgap(20);
-		HBox targetUrlInputRow = new TargetUrlInputRow();
+	private static final Logger LOGGER =
+			Logger.getLogger(MainFrame.class.getName());
+	
+	private TargetUrlInputRow targetUrlInputRow;
+	public MainFrame(TargetUrlInputRow targetUrlInputRow) {
+		this.targetUrlInputRow = targetUrlInputRow;		
+		this.setVgap(20);
 		HBox threadsAmountRow = new ThreadsAmountRow();
-		root.addRow(0, targetUrlInputRow);
-		root.addRow(1, threadsAmountRow);
+		this.addRow(0, targetUrlInputRow);
+		this.addRow(1, threadsAmountRow);
 		
-		Scene scene = new Scene(root, 700, 600);
-		stage.setScene(scene);
-		stage.show();
 	}
+	
 	
 	
 

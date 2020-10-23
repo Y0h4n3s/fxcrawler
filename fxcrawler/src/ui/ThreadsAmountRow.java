@@ -1,12 +1,19 @@
 package ui;
 
 import javafx.scene.control.TextField;
+
+import java.util.logging.Logger;
+
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Slider;
 import javafx.scene.text.*;
 import javafx.scene.layout.HBox;
 
 public class ThreadsAmountRow extends HBox{
+	
+	private static final Logger LOGGER =
+			Logger.getLogger(ThreadsAmountRow.class.getName());
 	
 	Text threadsText = new Text("Threads");
 	TextField threadsAmountField = new TextField();

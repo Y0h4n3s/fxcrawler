@@ -12,5 +12,6 @@
 			<attribute name="javadoc_location" value="jar:file:/home/y0h4n3s/Desktop/Development/lib/jsoup-1.13.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/y0h4n3s/Desktop/Development/lib/sqlite-jdbc-3.32.3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
