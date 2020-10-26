@@ -1,48 +1,115 @@
 package crawler;
 
-import crawler.WebSite;
-
-import org.jsoup.nodes.*;
-import org.jsoup.select.*;
-
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-import org.jsoup.*;
-public class WebPage implements Callable<WebPages> {
+public class WebPage {
+
+	private String myUrlString;
+	private String myLocalString;
+	private ArrayList<WebPage> myLinksList = new ArrayList<>();
+	private Integer level;
+	private Integer maxLevel;
+	private Boolean downloadSuccess = false;
+	/**
+	 * @return the level
+	 */
+	public Integer getLevel() {
+		return level;
+	}
+
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	/**
+	 * @return the myUrlString
+	 */
+	public String getMyUrlString() {
+		return myUrlString;
+	}
+
+	/**
+	 * @param myUrlString the myUrlString to set
+	 */
+	public void setMyUrlString(String myUrlString) {
+		this.myUrlString = myUrlString;
+	}
+
+	/**
+	 * @return the myLinksList
+	 */
+	public ArrayList<WebPage> getMyLinksList() {
+		return myLinksList;
+	}
+
+	/**
+	 * @param myLinksList the myLinksList to set
+	 */
+	public void setMyLinksList(ArrayList<WebPage> myLinksList) {
+		this.myLinksList = myLinksList;
+	}
+
+	public WebPage(String myUrlString, String myLocalString, ArrayList<WebPage> myLinksList) {
+		this.myUrlString = myUrlString;
+		this.myLinksList = myLinksList;
+		this.myLocalString = myLocalString;
+	}
 	
-	private String myUrl;
-	private static final Logger LOGGER =
-			Logger.getLogger(WebPage.class.getName());
-	
-	public WebPage(String myUrl) {
+	public WebPage(String myUrlString, String myLocalString, Integer level, Integer maxLevel) {
+		this.myUrlString = myUrlString;
+		this.myLocalString = myLocalString;
+		this.level = level;
+		this.maxLevel = maxLevel;
 		
-		this.myUrl = myUrl;
+	}
+	public WebPage(String myUrlString, Integer level, Integer maxLevel) {
+		this.myUrlString = myUrlString;
+		this.level = level;
+		this.maxLevel = maxLevel;
+		
+	}
+	
+	
+	public WebPage(String myUrlString) {
+		this.myUrlString = myUrlString;
 	}
 
 	@Override
-	public WebPages call() throws Exception {
-		LOGGER.log(Level.INFO, "Entered Thread: " + Thread.currentThread().toString() + " for url [" + myUrl + "].");
-		WebPages myPages;
-		
-			Document myDocument = Jsoup.connect(myUrl).get();
-			Elements elements = myDocument.select("a[href]");
-			ArrayList<String> webPagesArrayList = (ArrayList<String>) elements
-																		.stream()
-																		.map(element -> element.absUrl("href"))
-																		.collect(Collectors.toList());
-			myPages = new WebPages(myUrl, webPagesArrayList);
-		
-		
-		return Objects.requireNonNull(myPages);
+	public String toString() {
+		String string = "WebPages [myUrlString=" + myUrlString + " myLocalString=" + myLocalString + ",\nmyLinksList=[" ;
+		for (WebPage link : myLinksList)
+			string += (link.getMyUrlString() + ",\n");
+		 
+		string+= "] \n + Level= " + level + " \nDownloaded= " + downloadSuccess + "]";
+		return string;
 	}
 	
 	
+
+	@Override
+	public boolean equals(Object obj) {
+		WebPage webPageObj = (WebPage) obj;
+		return webPageObj.getMyUrlString().equals(this.myUrlString);
+	}
+
+	public Integer getMaxLevel() {
+		return maxLevel;
+	}
+
+	public void setMaxLevel(Integer maxLevel) {
+		this.maxLevel = maxLevel;
+	}
+
+	public Boolean getDownloadSuccess() {
+		return downloadSuccess;
+	}
+
+	public void setDownloadSuccess(Boolean downloadSuccess) {
+		this.downloadSuccess = downloadSuccess;
+	}
 	
+
 }
